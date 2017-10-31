@@ -45,11 +45,11 @@ defmodule Identicon do
 
   def build_pixel_map(%Identicon.Image{grid: grid} = image) do
     pixel_map = Enum.map grid, fn({_code, index}) ->
-      horizontal_axis = rem(index, 5) * 50
-      vertical_axis = div(index, 5) * 50
+      horizontal = rem(index, 5) * 50 + 25
+      vertical = div(index, 5) * 50 + 25
 
-      top_left = {horizontal_axis, vertical_axis}
-      bottom_right = {horizontal_axis + 50, vertical_axis + 50}
+      top_left = {horizontal, vertical}
+      bottom_right = {horizontal + 50, vertical + 50}
 
       {top_left, bottom_right}
     end
@@ -58,7 +58,7 @@ defmodule Identicon do
   end
 
   def draw_image(%Identicon.Image{color: color, pixel_map: pixel_map}) do
-    image = :egd.create(250, 250)
+    image = :egd.create(300, 300)
     fill = :egd.color(color)
 
     Enum.each pixel_map, fn({start, stop}) ->
